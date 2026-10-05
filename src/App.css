@@ -9,6 +9,10 @@
   --color-muted: #6b7280;
   --color-done: #9ca3af;
   --color-done-bg: #f9fafb;
+  --color-overdue: #dc2626;
+  --color-overdue-bg: #fef2f2;
+  --color-today: #c2410c;
+  --color-today-bg: #fff7ed;
 }
 
 * {
@@ -38,16 +42,26 @@ h1 {
 
 .add-form {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 .add-form input {
-  flex: 1;
   min-width: 0;
   padding: 10px 12px;
   font-size: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 8px;
+}
+
+.add-form .add-title {
+  flex: 1 1 200px;
+}
+
+.add-form .add-due {
+  flex: 0 0 auto;
+  color: var(--color-text);
+  font-family: inherit;
 }
 
 .add-form input:focus {
@@ -74,6 +88,17 @@ h1 {
   cursor: not-allowed;
 }
 
+.alert {
+  margin: 16px 0 0;
+  padding: 10px 12px;
+  color: var(--color-overdue);
+  background: var(--color-overdue-bg);
+  border: 1px solid var(--color-overdue);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .empty,
 .summary {
   margin: 20px 0 8px;
@@ -93,6 +118,7 @@ h1 {
 
 .task {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   padding: 12px;
@@ -101,9 +127,9 @@ h1 {
   border-radius: 8px;
 }
 
-.task label {
+.task-main {
   display: flex;
-  flex: 1;
+  flex: 1 1 220px;
   align-items: center;
   gap: 10px;
   min-width: 0;
@@ -118,8 +144,69 @@ h1 {
   cursor: pointer;
 }
 
-.task span {
+.task-title {
   overflow-wrap: anywhere;
+}
+
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.task-due {
+  padding: 4px 6px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+
+.badge {
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* 期限切れ（未完了のみ）は赤で強調 */
+.badge-overdue {
+  color: #fff;
+  background: var(--color-overdue);
+}
+
+.task.overdue {
+  background: var(--color-overdue-bg);
+  border-color: var(--color-overdue);
+  border-left-width: 4px;
+}
+
+.task.overdue .task-due {
+  color: var(--color-overdue);
+  border-color: var(--color-overdue);
+}
+
+/* 今日が期限のタスクはオレンジで注意 */
+.badge-today {
+  color: var(--color-today);
+  background: var(--color-today-bg);
+  border: 1px solid var(--color-today);
+}
+
+.task.today {
+  border-color: var(--color-today);
+  border-left-width: 4px;
+}
+
+/* 左線を太くした分、内側の余白を詰めて位置をそろえる */
+.task.overdue,
+.task.today {
+  padding-left: 9px;
 }
 
 /* 完了済みのタスクはグレー表示 */
