@@ -53,4 +53,4 @@ task-app/
 
 ## GitHubリポジトリ
 
-（リポジトリ作成後にURLを記載する）
+https://github.com/insight-navi/task-app
