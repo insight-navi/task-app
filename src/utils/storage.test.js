@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { STORAGE_KEY, loadTasks, saveTasks } from './storage.js'
+import { LEGACY_STORAGE_KEY, STORAGE_KEY, loadTasks, saveTasks } from './storage.js'
 
 // localStorage と同じ getItem / setItem を持つテスト用の入れ物
 function createStorage(initial = {}) {
@@ -31,6 +31,26 @@ describe('saveTasks / loadTasks', () => {
   it('保存データが壊れていても空配列で始める', () => {
     expect(loadTasks(createStorage({ [STORAGE_KEY]: '{壊れたJSON' }))).toEqual([])
     expect(loadTasks(createStorage({ [STORAGE_KEY]: '"文字列"' }))).toEqual([])
+  })
+
+  it('以前の版（task-app）のデータを今の形式で引き継ぐ', () => {
+    const legacy = [
+      { id: 'a', title: '古いタスク', done: true, due: '2026-10-08' },
+      { id: 'b', title: '期限なし', done: false, due: '' },
+    ]
+    const storage = createStorage({ [LEGACY_STORAGE_KEY]: JSON.stringify(legacy) })
+    expect(loadTasks(storage)).toEqual([
+      { id: 'a', title: '古いタスク', completed: true, dueDate: '2026-10-08' },
+      { id: 'b', title: '期限なし', completed: false, dueDate: '' },
+    ])
+  })
+
+  it('今の形式で保存済みなら以前の版のデータは使わない', () => {
+    const storage = createStorage({
+      [STORAGE_KEY]: JSON.stringify([]),
+      [LEGACY_STORAGE_KEY]: JSON.stringify([{ id: 'a', title: '古い', done: false, due: '' }]),
+    })
+    expect(loadTasks(storage)).toEqual([])
   })
 
   it('ストレージが使えなくてもエラーにならない', () => {

@@ -2,12 +2,15 @@
 
 このファイルは、このリポジトリで作業する Claude Code 向けのガイドです。
 
+返答・コードのコメント・UI のテキスト・コミットメッセージは日本語で書くこと。
+
 ## プロジェクト概要
 
 - プロジェクト名: task_form
 - 概要: タスクの追加・完了切り替え・期限日設定・削除ができるタスクボード
 - 技術スタック: React 19 + Vite（JavaScript）、テストは Vitest
-- データ保存: ブラウザの localStorage（キー `task-board/tasks`）。サーバーはない
+- データ保存: ブラウザの localStorage（キー `task-board/tasks`）。サーバーはない。以前の版のキー `task-app.tasks` のデータは初回読み込み時に引き継ぐ
+- GitHub リポジトリ: https://github.com/insight-navi/task-app
 
 ## ディレクトリ構成
 
@@ -31,7 +34,7 @@ npm run build    # 本番ビルド（dist/ に出力）
 - `main` ブランチにプッシュすると、`.github/workflows/deploy.yml` がテスト → ビルド → GitHub Pages への公開を自動で行う
 - テストが失敗すると公開されない。プッシュ前に `npm test` と `npm run build` を通しておく
 - `vite.config.js` の `base: './'` は Pages のサブパス配信用。消すと公開先で画面が真っ白になる
-- 公開URL: https://insight-navi.github.io/task-board/
+- 公開URL: https://insight-navi.github.io/task-app/
 
 ## コーディング規約
 
