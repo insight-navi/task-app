@@ -1,0 +1,154 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1f2328;
+  --muted: #8c959f;
+  --border: #d0d7de;
+  --accent: #2f6feb;
+  --danger: #d1242f;
+  font-family: system-ui, 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+.board {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+h1 {
+  margin: 0 0 20px;
+  font-size: 1.6rem;
+}
+
+.add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.add-title {
+  flex: 1 1 240px;
+}
+
+input[type='text'],
+input[type='date'] {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font: inherit;
+  background: var(--card);
+  color: inherit;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font: inherit;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.summary,
+.empty {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.task-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 200px;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.task-main input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.task-title {
+  overflow-wrap: anywhere;
+}
+
+.task-due {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.task-due input {
+  padding: 4px 6px;
+  font-size: 0.85rem;
+}
+
+.delete {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  padding: 4px 12px;
+  font-size: 0.85rem;
+}
+
+/* 期限まで3日以内（期限切れ含む）: 赤太字 */
+.task.due-soon .task-title,
+.task.due-soon .due-label {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+/* 完了済み: グレー表示 */
+.task.completed {
+  background: #eef0f2;
+}
+
+.task.completed .task-title {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.task.completed .due-label {
+  color: var(--muted);
+}
